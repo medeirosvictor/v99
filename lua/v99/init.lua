@@ -16,9 +16,16 @@
 
 local M = {}
 
--- Commit pin for 99 (update as needed)
--- If upstream breaks, roll back here to a known working commit
-local PINNED_COMMIT = nil  -- e.g., "abc123f"
+-- ============================================================================
+-- COMMIT PINNING
+-- ============================================================================
+-- If 99 upstream breaks, set this to a known-working commit.
+-- Then manually checkout in the 99 plugin directory:
+--   cd ~/.local/share/nvim/lazy/ThePrimeagen/99 && git checkout <commit>
+-- ============================================================================
+local PINNED_99_COMMIT = nil  -- e.g., "abc123f"
+
+-- ============================================================================
 
 --- @class v99.Options
 --- @field provider? _99.Providers.BaseProvider

@@ -71,13 +71,40 @@ The wrapped 99 API is available via `require("v99").api`:
 
 ## Commit Pinning
 
-To pin to a specific 99 commit for stability, edit `lua/v99/init.lua` and set:
+### Pinning v99 Itself
+
+To pin v99 to a specific version, specify the commit/branch in your config:
 
 ```lua
-local PINNED_COMMIT = "abc123f"
+{ "victor/v99", commit = "abc123f" }
 ```
 
-Then manually checkout that commit in the 99 plugin directory when updates break your workflow.
+### Pinning 99 Dependency
+
+If 99 upstream breaks, you can lock it to a known-working commit. Edit `lua/v99/init.lua` and set:
+
+```lua
+local PINNED_COMMIT = "abc123f"  -- your known-good commit
+```
+
+Then manually checkout that commit in the 99 plugin directory:
+
+```bash
+# Find where lazy.nvim installed 99
+cd ~/.local/share/nvim/lazy/ThePrimeagen/99
+git checkout abc123f
+```
+
+To find a good commit to pin to, check the [99 commits](https://github.com/ThePrimeagen/99/commits/master) and note one that works for you.
+
+### Recovery Workflow
+
+If 99 updates and breaks your workflow:
+
+1. Identify the breaking change (check `/tmp/<project>.99.debug` logs)
+2. Find a working commit: `git log --oneline` in the 99 plugin directory
+3. Pin with `PINNED_COMMIT` in v99
+4. Optionally, open an issue on 99
 
 ## License
 
