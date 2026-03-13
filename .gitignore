@@ -1,0 +1,17 @@
+# Lua
+*.lua
+
+# Neovim
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug logs
+*.debug
+
+# Tmp
+tmp/
