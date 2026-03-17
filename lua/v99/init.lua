@@ -6,7 +6,7 @@
 --- - Easy configuration
 ---
 --- Usage:
----   { "victor/v99", dependencies = { "ThePrimeagen/99" } }
+---   { "medeirosvictor/v99", dependencies = { "ThePrimeagen/99" } }
 ---
 --- In your config:
 ---   require("v99").setup({
@@ -74,7 +74,10 @@ function M.setup(opts)
   
   -- Initialize 99
   _99.setup(config)
-  
+
+  -- Register PiProvider into 99's provider table so it shows up in the picker
+  _99.Providers.PiProvider = provider
+
   -- Expose 99 API for direct access if needed
   M.api = _99
 end

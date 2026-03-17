@@ -9,7 +9,7 @@ A wrapper around [ThePrimeagen/99](https://github.com/ThePrimeagen/99) that prov
 
 ```lua
 -- Using lazy.nvim
-{ "victor/v99", dependencies = { "ThePrimeagen/99" } }
+{ "medeirosvictor/v99", dependencies = { "ThePrimeagen/99" } }
 ```
 
 ## Usage
@@ -76,7 +76,7 @@ The wrapped 99 API is available via `require("v99").api`:
 To pin v99 to a specific version, specify the commit/branch in your config:
 
 ```lua
-{ "victor/v99", commit = "abc123f" }
+{ "medeirosvictor/v99", commit = "abc123f" }
 ```
 
 ### Pinning 99 Dependency
