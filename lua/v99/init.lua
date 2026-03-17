@@ -45,10 +45,10 @@ function M.setup(opts)
   local cwd = vim.uv.cwd()
   local basename = vim.fs.basename(cwd)
   
-  -- Default to ClaudeCodeProvider if no provider specified
+  -- Default to v99's ClaudeProvider if no provider specified
   local provider = opts.provider
   if not provider then
-    provider = _99.Providers.ClaudeCodeProvider
+    provider = require("v99.providers.claude")
   end
   
   -- Build 99 config
@@ -79,8 +79,9 @@ function M.setup(opts)
   -- default model name — provider_override must be set separately)
   _99.set_provider(provider)
 
-  -- Register PiProvider into 99's provider table so it shows up in the picker
+  -- Register v99 providers into 99's picker table
   _99.Providers.PiProvider = require("v99.providers.pi")
+  _99.Providers.ClaudeProvider = require("v99.providers.claude")
 
   -- Expose 99 API for direct access if needed
   M.api = _99
