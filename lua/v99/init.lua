@@ -82,6 +82,7 @@ function M.setup(opts)
   -- Register v99 providers into 99's picker table
   _99.Providers.PiProvider = require("v99.providers.pi")
   _99.Providers.ClaudeProvider = require("v99.providers.claude")
+  _99.Providers.OpenCodeProvider = require("v99.providers.opencode")
 
   -- Expose 99 API for direct access if needed
   M.api = _99
