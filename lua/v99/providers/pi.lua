@@ -1,16 +1,11 @@
 --- Pi coding agent provider for 99.
---- Uses pi CLI in non-interactive mode with appended context.
+--- Uses pi CLI in non-interactive mode.
 ---
 --- Usage:
 ---   local v99 = require("v99")
 ---   v99.setup({
----     provider = v99.providers.pi({
----       model = "claude-sonnet-4-5",  -- optional, uses default if not set
----     })
+---     provider = require("v99.providers.pi"),
 ---   })
----
---- Or simply:
----   v99.setup({})  -- uses pi provider by default
 
 local Providers = require("99.providers")
 
@@ -21,22 +16,17 @@ local PiProvider = setmetatable({}, { __index = Providers.BaseProvider })
 --- @return string[]
 function PiProvider:_build_command(query, context)
   local cmd = { "pi", "-p" }
-  
-  -- Append context file if available
-  if context.tmp_file then
-    table.insert(cmd, "--append-system-prompt")
-    table.insert(cmd, "@" .. context.tmp_file)
-  end
-  
+
   -- Add model if specified
   if context.model then
     table.insert(cmd, "--model")
     table.insert(cmd, context.model)
   end
-  
-  -- Add the query/prompt
+
+  -- The query already contains the TEMP_FILE instruction from 99's prompt
+  -- builder. Pi's write tool will create the file as instructed.
   table.insert(cmd, query)
-  
+
   return cmd
 end
 
