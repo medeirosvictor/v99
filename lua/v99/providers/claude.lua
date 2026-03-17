@@ -16,12 +16,15 @@ function ClaudeProvider._build_command(_, query, context)
   local cmd = { "claude", "--dangerously-skip-permissions", "--print" }
 
   -- Only pass --model if explicitly set by the user in v99.setup()
-  if context.model then
+  if context.model and context.model ~= "" then
     table.insert(cmd, "--model")
     table.insert(cmd, context.model)
   end
 
-  table.insert(cmd, query)
+  -- Use @file to avoid Windows CreateProcess mangling of long prompts.
+  local prompt_file = context.tmp_file .. "-prompt"
+  table.insert(cmd, "@" .. prompt_file)
+
   return cmd
 end
 
@@ -30,10 +33,11 @@ function ClaudeProvider._get_provider_name()
   return "ClaudeProvider"
 end
 
---- @return nil
+--- @return string
 function ClaudeProvider._get_default_model()
-  -- No forced model — claude CLI uses its own configured default.
-  return nil
+  -- Empty string = use claude CLI's own configured default.
+  -- Set opts.model in v99.setup() to override.
+  return ""
 end
 
 return ClaudeProvider
