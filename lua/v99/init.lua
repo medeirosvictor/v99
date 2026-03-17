@@ -79,13 +79,41 @@ function M.setup(opts)
   -- default model name — provider_override must be set separately)
   _99.set_provider(provider)
 
-  -- Register v99 providers into 99's picker table
-  _99.Providers.PiProvider = require("v99.providers.pi")
-  _99.Providers.ClaudeProvider = require("v99.providers.claude")
-  _99.Providers.OpenCodeProvider = require("v99.providers.opencode")
+  -- Replace 99's provider registry with only what's available on this machine.
+  -- Comment out M._wipe_upstream_providers() to let 99's built-in providers
+  -- appear in the picker alongside v99's.
+  M._wipe_upstream_providers(_99)
+  M._register_available_providers(_99)
 
   -- Expose 99 API for direct access if needed
   M.api = _99
+end
+
+--- Removes all upstream 99 providers from the registry.
+--- Comment the call in setup() to fall back to 99's built-in list.
+--- @param _99 table
+function M._wipe_upstream_providers(_99)
+  for k in pairs(_99.Providers) do
+    if k ~= "BaseProvider" then
+      _99.Providers[k] = nil
+    end
+  end
+end
+
+--- Registers v99 providers that are actually installed on this machine.
+--- @param _99 table
+function M._register_available_providers(_99)
+  local registry = {
+    { name = "PiProvider",       module = "v99.providers.pi",       bin = "pi"       },
+    { name = "ClaudeProvider",   module = "v99.providers.claude",   bin = "claude"   },
+    { name = "OpenCodeProvider", module = "v99.providers.opencode", bin = "opencode" },
+  }
+
+  for _, p in ipairs(registry) do
+    if vim.fn.executable(p.bin) == 1 then
+      _99.Providers[p.name] = require(p.module)
+    end
+  end
 end
 
 --- Get the providers module
