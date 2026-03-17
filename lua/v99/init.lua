@@ -45,10 +45,10 @@ function M.setup(opts)
   local cwd = vim.uv.cwd()
   local basename = vim.fs.basename(cwd)
   
-  -- Default to v99's ClaudeProvider if no provider specified
+  -- Default to PiProvider if no provider specified
   local provider = opts.provider
   if not provider then
-    provider = require("v99.providers.claude")
+    provider = require("v99.providers.pi")
   end
   
   -- Build 99 config
