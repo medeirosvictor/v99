@@ -35,9 +35,11 @@ function PiProvider:_get_provider_name()
   return "PiProvider"
 end
 
---- @return string
+--- @return string | nil
 function PiProvider:_get_default_model()
-  return "claude-sonnet-4-5"
+  -- Return nil so pi uses its own configured default provider/model.
+  -- Set opts.model in v99.setup() to override explicitly.
+  return nil
 end
 
 return PiProvider
