@@ -45,10 +45,10 @@ function M.setup(opts)
   local cwd = vim.uv.cwd()
   local basename = vim.fs.basename(cwd)
   
-  -- Default to PiProvider if no provider specified
+  -- Default to CopilotProvider if no provider specified
   local provider = opts.provider
   if not provider then
-    provider = require("v99.providers.pi")
+    provider = require("v99.providers.copilot")
   end
   
   -- Build 99 config
@@ -104,6 +104,7 @@ end
 --- @param _99 table
 function M._register_available_providers(_99)
   local registry = {
+    { name = "CopilotProvider",  module = "v99.providers.copilot",  bin = "copilot"  },
     { name = "PiProvider",       module = "v99.providers.pi",       bin = "pi"       },
     { name = "ClaudeProvider",   module = "v99.providers.claude",   bin = "claude"   },
     { name = "OpenCodeProvider", module = "v99.providers.opencode", bin = "opencode" },

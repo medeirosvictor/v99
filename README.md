@@ -15,19 +15,20 @@ A wrapper around [ThePrimeagen/99](https://github.com/ThePrimeagen/99) that prov
 ## Usage
 
 ```lua
--- Basic setup (uses pi provider by default)
+-- Basic setup (uses copilot provider by default)
 require("v99").setup({})
 
 -- With custom options
 require("v99").setup({
-  -- Use pi provider (default)
-  provider = require("v99.providers").pi,
+  -- Use copilot provider (default)
+  provider = require("v99.providers").copilot,
   
   -- Or use a different provider
-  -- provider = require("99.providers").OpenCodeProvider,
-  -- provider = require("99.providers").ClaudeCodeProvider,
+  -- provider = require("v99.providers").pi,
+  -- provider = require("v99.providers").claude,
+  -- provider = require("v99.providers").opencode,
   
-  model = "claude-sonnet-4-5",
+  model = "claude-sonnet-4.5",
   logger = {
     level = require("v99").DEBUG,
     path = "/tmp/myproject.99.debug",
@@ -49,12 +50,38 @@ vim.keymap.set("n", "<leader>9s", function() require("v99").api.search() end)
 
 ## Providers
 
-### Pi Provider (default)
+### Copilot Provider (default)
+
+Uses the GitHub Copilot CLI (`copilot`) for AI coding assistance.
+Defaults to whatever model you have configured in the Copilot CLI
+(`~/.copilot/config.json` or the `/model` slash command).
+
+```lua
+provider = require("v99.providers.copilot")
+```
+
+### Pi Provider
 
 Uses the `pi` CLI for AI coding assistance.
 
 ```lua
 provider = require("v99.providers.pi")
+```
+
+### Claude Provider
+
+Uses the `claude` CLI (Claude Code) for AI coding assistance.
+
+```lua
+provider = require("v99.providers.claude")
+```
+
+### OpenCode Provider
+
+Uses the `opencode` CLI for AI coding assistance.
+
+```lua
+provider = require("v99.providers.opencode")
 ```
 
 ## API
